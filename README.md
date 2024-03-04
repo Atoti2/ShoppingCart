@@ -1,8 +1,5 @@
-# React + Vite
+I made a Shopping Cart application using React along with react-router. I learned how to use framer-motion and how to fetch data in react. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I also got in more depth how to handle routes and pass data using useParams
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[**Page**](https://totishoppingcart.netlify.app/)
