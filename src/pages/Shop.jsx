@@ -9,6 +9,7 @@ const Shop = ({handleAddToCart}) => {
     const [loading, setLoading] = useState(true);
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState([])
+    
     useEffect(() => {
         fetchData(setItems, setError, setLoading)
     }, [])

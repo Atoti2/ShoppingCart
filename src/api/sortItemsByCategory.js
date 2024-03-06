@@ -7,7 +7,6 @@ const sortItems = (setData, setLoading, query = "") => {
         return response.json();
       })
     .then(json=> setData(json))
-    .catch(error => setError(error))
     .finally(setLoading(false))
   
 }

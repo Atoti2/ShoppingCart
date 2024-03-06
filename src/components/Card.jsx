@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
+import { motion } from 'framer-motion'
 
-const Card = ({category, description, id, image, price, title, handleAdd}) => {
+const Card = ({id, image, price, title, handleAdd}) => {
+    
     const [quantity, setQuantity] = useState(1)
+    const [animating, setAnimating] = useState(false)
+    const [position, setPosition] = useState({x: 0, y: 0})
+
     function addToQuantity(){
         if(quantity >= 1){
-            setQuantity(quantity + 1)
+            setQuantity(quantity + 1) 
         }
     }
     function decreaseQuantity(){
@@ -13,6 +18,8 @@ const Card = ({category, description, id, image, price, title, handleAdd}) => {
             setQuantity(quantity - 1)
         }
     }
+
+
     return(
         <>
             <div className="rounded-md w-96 mb-20 shadow-xl bg-white justify-between">
@@ -21,20 +28,52 @@ const Card = ({category, description, id, image, price, title, handleAdd}) => {
                     <img src={image} alt={title} className="w-full rounded-md h-96"/>
                 </figure>
                 </Link>
-                
                 <div className="p-5">
-                    <h1 className="text-xl text-black ">{title}</h1>
+                    <h1 className="text-xl text-black">{title}</h1>
                     <p className="text-lg italic text-black">${price}</p>
 
-                        <button onClick={() => handleAdd({id, title, price, quantity})}
-                        className="bg-black text-white p-5 mt-5 rounded-md hover:bg-black/80 transition-all">Add to cart</button>
-                        <p className="text-xl text-black font-bold inline ml-5">{quantity}</p>
+                        <motion.button 
 
-                        <div className="flex mt-5 gap-3">
+                        onClick={((e) => {
+                            handleAdd({id, title, price, quantity})
+                            setAnimating(!animating)
+                            setPosition({
+                                x: e.clientX,
+                                y: e.clientY
+                            })
+                            
+                        })} 
+                        className="bg-black text-white p-5 mt-5 rounded-md hover:bg-black/80 transition-all">Add to cart</motion.button>
+                    
+                        <div className="flex mt-5 gap-3 items-center">
                             <p className="text-xl text-white bg-black rounded-md hover:bg-black/80 cursor-pointer p-2 w-8 text-center" 
                             onClick={() => addToQuantity()}
                             >+</p>
-                            <p className="text-xl text-white bg-black rounded-md hover:bg-black/80 cursor-pointer p-2 w-8 text-center"
+                                {animating && (
+                                <>
+                                <motion.p
+                                initial={{left: `{${position.x}px`, top:`${position.y}px` }}
+                                animate={{
+                                    top: 15, 
+                                    right: 30,
+                                    scale: 1.5,
+                                    transitionEnd: {
+                                        display: "none",
+                                        top: 0,
+                                        left: 0,
+                                    }
+                                }}
+                                transition={{type: "just", duration: 0.3}}
+                                className="text-3xl text-black font-bold inline fixed">{quantity}</motion.p>
+                                </>
+                                )   
+                                }
+                                
+                                <p className="text-xl text-black font-bold inline">{quantity}</p>
+
+                            <p 
+                            
+                            className="text-xl text-white bg-black rounded-md hover:bg-black/80 cursor-pointer p-2 w-8 text-center"
                             onClick={() => decreaseQuantity()}
                             >-</p>
                         </div>
